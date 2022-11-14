@@ -10,7 +10,8 @@ body {
 </style>
 
 <script type="application/javascript">
-
+// This JavaScript code for the base pong game was gotten from: https://codepen.io/gdube/pen/JybxxZ#anon-signup
+// Thanks to Gabriel Dube for this code
 
 ///////////////
 // Global Variables
@@ -360,14 +361,14 @@ var Game = {
 			xmlhttp.setRequestHeader("Content-type", "application/json")
 			xmlhttp.send("")
 			console.log(sensorValue)
-			// Handle up arrow and w key events
+			// move paddle up if positive z
 			if (sensorValue > 0) Pong.player.move = DIRECTION.UP;
 
-			// Handle down arrow and s key events
+			// move paddle down if negative z
 			if (sensorValue < 0) Pong.player.move = DIRECTION.DOWN;
 			setTimeout(() => {
 				getData()
-			}, 10)
+			}, 1)
 		}
 		getData()
 
