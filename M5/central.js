@@ -4,6 +4,8 @@ const noble = require('@abandonware/noble');
 var cors = require('cors')
 
 
+
+const uuid_service = ["1339", "1125"];
 const uuid_value = "2139";
 
 let sensorValue = NaN;
@@ -14,7 +16,7 @@ let count = 0;
 noble.on('stateChange', async (state) => {
     if (state === 'poweredOn') {
         console.log("start scanning")
-         await noble.startScanningAsync(["1339"], false);
+         await noble.startScanningAsync(["1125"], false);
     }
 });
 
@@ -40,7 +42,7 @@ noble.on('discover', async (peripheral) => {
         console.log(count);
     }
     if (count < 2)
-        await noble.startScanningAsync("1125");
+        await noble.startScanningAsync("1339", false);
 
 });
 

@@ -2,7 +2,7 @@
 #include <Arduino_LSM6DS3.h>
 #include <Arduino_LSM6DSOX.h>
 
-#define BLE_UUID_gyroscope_SERVICE "1125"
+#define BLE_UUID_gyroscope_SERVICE "1339"
 #define BLE_UUID_gyroscope_X "2139"
 #define BLE_UUID_gyroscope_Y "2102"
 #define BLE_UUID_gyroscope_Z "2103"
