@@ -15,6 +15,9 @@ body {
 
 ///////////////
 // Global Variables
+
+var right_player_gyro = 0;
+
 var DIRECTION = {
 	IDLE: 0,
 	UP: 1,
@@ -168,7 +171,7 @@ var Game = {
 			else if (this.ball.moveX === DIRECTION.RIGHT) this.ball.x += this.ball.speed;
 
 			// Handle paddle (AI) UP and DOWN movement
-			
+			/*
 			if (this.paddle.y > this.ball.y - (this.paddle.height / 2)) {
 				if (this.ball.moveX === DIRECTION.RIGHT) this.paddle.y -= this.paddle.speed / 1.5;
 				else this.paddle.y -= this.paddle.speed / 4;
@@ -177,43 +180,13 @@ var Game = {
 				if (this.ball.moveX === DIRECTION.RIGHT) this.paddle.y += this.paddle.speed / 1.5;
 				else this.paddle.y += this.paddle.speed / 4;
 			}
-			
-			// Listen for z accelerometer value
-			/*
-			const SERVERADDRESS = "http://127.0.0.1:3000"
-
-			let sensorValue = 0
-			// use XML HTTP request to grab data from the server (central)
-			let xmlhttp = new XMLHttpRequest()
-			xmlhttp.onreadystatechange = function () {
-			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-				let responseText = xmlhttp.responseText
-				sensorValue = parseFloat(JSON.parse(responseText).sensorValue)
-				}
-			}
-
-			// periodically grab data
-			let getData = () => {
-				xmlhttp.open("POST", SERVERADDRESS, true)
-				xmlhttp.setRequestHeader("Content-type", "application/json")
-				xmlhttp.send("")
-				console.log(sensorValue)
-
-			// move paddle up if positive gyroscope X, but ONLY if it meets certain threshold value depending on the current direction
-			if (sensorValue > 0) {
-				this.paddle.y -= this.paddle.speed/4;
-			}
-			// move paddle down if negative gyroscope X, but ONLY if it meets certain threshold value depending on the current direction
-
-			if (sensorValue < 0) {
-					this.paddle.y += this.paddle.speed/4;
-			} 
-			setTimeout(() => {
-				getData()
-				}, 1)
-			}
-			getData()
 			*/
+			if (right_player_gyro > 0)
+				this.paddle.y -= this.paddle.speed;
+			
+			if (right_player_gyro < 0)
+				this.paddle.y += this.paddle.speed;
+
 			//////////////////////////////
 
 			// Handle paddle (AI) wall collision
@@ -392,6 +365,7 @@ var Game = {
 			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 				let responseText = xmlhttp.responseText
 				sensorValue = parseFloat(JSON.parse(responseText).sensorValue)
+				right_player_gyro = parseFloat(JSON.parse(responseText).sensorValue2)
 			}
 		}
 	// periodically grab data
@@ -399,7 +373,6 @@ var Game = {
 			xmlhttp.open("POST", SERVERADDRESS, true)
 			xmlhttp.setRequestHeader("Content-type", "application/json")
 			xmlhttp.send("")
-			console.log(sensorValue)
 
 			// move paddle up if positive gyroscope X, but ONLY if it meets certain threshold value depending on the current direction
 			if (sensorValue > 0) {
