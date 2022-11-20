@@ -65,6 +65,7 @@ let readData = async (characteristic) => {
     }, 10);
 }
 
+// 1125
 let readData2 = async (characteristic) => {
     const value = (await characteristic.readAsync());
     sensorValue2 = value.readFloatLE(0);
