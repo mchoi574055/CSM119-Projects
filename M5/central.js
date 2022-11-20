@@ -4,8 +4,6 @@ const noble = require('@abandonware/noble');
 var cors = require('cors')
 
 
-
-const uuid_service = ["1339", "1125"];
 const uuid_value = "2139";
 
 let sensorValue = NaN;
