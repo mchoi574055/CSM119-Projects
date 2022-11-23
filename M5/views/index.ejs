@@ -181,10 +181,10 @@ var Game = {
 				else this.paddle.y += this.paddle.speed / 4;
 			}
 			*/
-			if (right_player_gyro > 0)
+			if (right_player_gyro > 20)
 				this.paddle.y -= this.paddle.speed;
 			
-			if (right_player_gyro < 0)
+			if (right_player_gyro < -20)
 				this.paddle.y += this.paddle.speed;
 
 			//////////////////////////////

@@ -11,6 +11,9 @@ const uuid_value = "2139";
 let sensorValue = NaN;
 let sensorValue2 = NaN;
 
+let detected1125 = false;
+let detected1339 = false;
+
 let count = 0;
 
 noble.on('stateChange', async (state) => {
@@ -25,21 +28,29 @@ noble.on('discover', async (peripheral) => {
     await noble.stopScanningAsync();
     if (peripheral.connectable) {
         console.log(peripheral.uuid);
-        await peripheral.connectAsync();
-        const {
-            characteristics
-        } = await peripheral.discoverAllServicesAndCharacteristicsAsync(); // ["1339", "1125"], [uuid_value])
+        if ((peripheral.uuid == "b87960518d0f697c8bad793d8538aa4b") || (peripheral.uuid == "0678b4148ccedda1d6ea2190392ad4db")) {
 
-        if (peripheral.uuid == "b87960518d0f697c8bad793d8538aa4b") {
-            readData2(characteristics[0]);
-            count++;
-        }
+            if (((peripheral.uuid == "b87960518d0f697c8bad793d8538aa4b") && (detected1125 == false)) || 
+                ((peripheral.uuid == "0678b4148ccedda1d6ea2190392ad4db") && (detected1339 == false)))
+                await peripheral.connectAsync();
+
+            const {
+                characteristics
+            } = await peripheral.discoverAllServicesAndCharacteristicsAsync(); // ["1339", "1125"], [uuid_value])
+
+            if (peripheral.uuid == "b87960518d0f697c8bad793d8538aa4b") {
+                readData2(characteristics[0]);
+                count++;
+                detected1125 = true;
+            }
     
-        if (peripheral.uuid == "0678b4148ccedda1d6ea2190392ad4db") {
-            readData(characteristics[0]);
-            count++;
+            if (peripheral.uuid == "0678b4148ccedda1d6ea2190392ad4db") {
+                readData(characteristics[0]);
+                count++;
+                detected1339 = true;
+            }
+            console.log(count);
         }
-        console.log(count);
     }
     if (count < 2)
         await noble.startScanningAsync("1339", false);
